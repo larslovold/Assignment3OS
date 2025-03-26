@@ -11,88 +11,116 @@ def save_results(filename, results):
     print(f"\nResults have been saved to {filename}.\n")
 
 def fcfs():
-    print("\n=== TEST FCFS Simulation ===")
-    process_count = int(input("How many tasks to schedule? "))
-    processes = []
+    try:
+        print("\n=== TEST FCFS Simulation ===")
+        process_count = int(input("How many tasks to schedule? "))
+        processes = []
+        task_ids = set()
 
-    for i in range(process_count):
-        task_id = input(f"Enter Task ID for Task {i + 1}: ")
-        arrival = int(input("Enter Start Time: "))
-        burst = int(input("Enter Duration: "))
-        processes.append([task_id, arrival, burst])
+        for i in range(process_count):
+            while True:
+                task_id = input(f"Enter Task ID for Task {i + 1}: ")
+                if task_id in task_ids:
+                    print("Task ID already exists! Please enter a unique Task ID.")
+                else:
+                    task_ids.add(task_id)
+                    break
+            arrival = int(input("Enter Start Time: "))
+            burst = int(input("Enter Duration: "))
+            processes.append([task_id, arrival, burst])
 
-    processes.sort(key=lambda x: x[1])
-    time_now = 0
-    wait_times = []
-    turn_times = []
+        processes.sort(key=lambda x: x[1])
+        time_now = 0
+        wait_times = []
+        turn_times = []
+        results = "Task ID\tWaiting Time\tTurnaround Time\n"
 
-    for process in processes:
-        task_id, arrival, burst = process
-        if time_now < arrival:
-            time_now = arrival
-        waiting_time = time_now - arrival
-        turnaround_time = waiting_time + burst
-        wait_times.append(waiting_time)
-        turn_times.append(turnaround_time)
-        time_now += burst
+        for process in processes:
+            task_id, arrival, burst = process
+            if time_now < arrival:
+                time_now = arrival
+            waiting_time = time_now - arrival
+            turnaround_time = waiting_time + burst
+            wait_times.append(waiting_time)
+            turn_times.append(turnaround_time)
+            time_now += burst
+            results += f"{task_id}\t{waiting_time}\t{turnaround_time}\n"
 
-    avg_waiting = sum(wait_times) / process_count
-    avg_turnaround = sum(turn_times) / process_count
+        avg_waiting = sum(wait_times) / process_count
+        avg_turnaround = sum(turn_times) / process_count
 
-    print("\nFCFS Scheduling Results:")
-    print(f"Mean Waiting Time: {avg_waiting:.2f}")
-    print(f"Mean Turnaround Time: {avg_turnaround:.2f}")
+        results += f"\nMean Waiting Time: {avg_waiting:.2f}\nMean Turnaround Time: {avg_turnaround:.2f}\n"
+        print(results)
 
+        if input("Do you want to save the results to a file? (y/n): ").lower() == 'y':
+            save_results('FCFS_Results.txt', results)
+
+    except ValueError:
+        print("\nInvalid input! Please enter numbers only where required.\n")
 
 def priority_scheduling():
-    print("\n=== Dynamic Priority Scheduling Simulation ===")
-    process_count = int(input("Number of tasks to handle: "))
-    processes = []
+    try:
+        print("\n=== Dynamic Priority Scheduling Simulation ===")
+        process_count = int(input("Number of tasks to handle: "))
+        processes = []
+        task_ids = set()
 
-    for i in range(process_count):
-        task_id = input(f"Enter Task ID for Task {i + 1}: ")
-        arrival = int(input("Enter Start Time: "))
-        burst = int(input("Enter Duration: "))
-        priority = int(input("Enter Priority Level (Lower is better): "))
-        processes.append([task_id, arrival, burst, priority])
+        for i in range(process_count):
+            while True:
+                task_id = input(f"Enter Task ID for Task {i + 1}: ")
+                if task_id in task_ids:
+                    print("Task ID already exists! Please enter a unique Task ID.")
+                else:
+                    task_ids.add(task_id)
+                    break
+            arrival = int(input("Enter Start Time: "))
+            burst = int(input("Enter Duration: "))
+            priority = int(input("Enter Priority Level (Lower is better): "))
+            processes.append([task_id, arrival, burst, priority])
 
-    processes.sort(key=lambda x: (x[1], x[3]))  
+        processes.sort(key=lambda x: (x[1], x[3]))  
 
-    task_queue = []
-    current_time = 0
-    wait_times = {}
-    turn_times = {}
-    remaining_burst = {p[0]: p[2] for p in processes}
+        task_queue = []
+        current_time = 0
+        wait_times = {}
+        turn_times = {}
+        remaining_burst = {p[0]: p[2] for p in processes}
+        results = "Task ID\tWaiting Time\tTurnaround Time\n"
 
-    while len(wait_times) < process_count:
-        for process in processes:
-            task_id, arrival, burst, priority = process
-            if arrival <= current_time and task_id not in wait_times:
-                heapq.heappush(task_queue, (priority, task_id, arrival, burst))
+        while len(wait_times) < process_count:
+            for process in processes:
+                task_id, arrival, burst, priority = process
+                if arrival <= current_time and task_id not in wait_times:
+                    heapq.heappush(task_queue, (priority, task_id, arrival, burst))
 
-        if task_queue:
-            priority, task_id, arrival, burst = heapq.heappop(task_queue)
-            if current_time < arrival:
-                current_time = arrival
+            if task_queue:
+                priority, task_id, arrival, burst = heapq.heappop(task_queue)
+                if current_time < arrival:
+                    current_time = arrival
 
-            if remaining_burst[task_id] > 0:
-                execution = min(remaining_burst[task_id], 1)
-                remaining_burst[task_id] -= execution
-                current_time += execution
+                if remaining_burst[task_id] > 0:
+                    execution = min(remaining_burst[task_id], 1)
+                    remaining_burst[task_id] -= execution
+                    current_time += execution
 
-                if remaining_burst[task_id] == 0:
-                    wait_times[task_id] = current_time - arrival - burst
-                    turn_times[task_id] = current_time - arrival
-        else:
-            current_time += 1
+                    if remaining_burst[task_id] == 0:
+                        wait_times[task_id] = current_time - arrival - burst
+                        turn_times[task_id] = current_time - arrival
+                        results += f"{task_id}\t{wait_times[task_id]}\t{turn_times[task_id]}\n"
+            else:
+                current_time += 1
 
-    avg_waiting = sum(wait_times.values()) / process_count
-    avg_turnaround = sum(turn_times.values()) / process_count
+        avg_waiting = sum(wait_times.values()) / process_count
+        avg_turnaround = sum(turn_times.values()) / process_count
 
-    print("\nPriority Scheduling Results:")
-    print(f"Mean Waiting Time: {avg_waiting:.2f}")
-    print(f"Mean Turnaround Time: {avg_turnaround:.2f}")
+        results += f"\nMean Waiting Time: {avg_waiting:.2f}\nMean Turnaround Time: {avg_turnaround:.2f}\n"
+        print(results)
 
+        if input("Do you want to save the results to a file? (y/n): ").lower() == 'y':
+            save_results('Priority_Results.txt', results)
+
+    except ValueError:
+        print("\nInvalid input! Please enter numbers only where required.\n")
 
 def menu():
     while True:
