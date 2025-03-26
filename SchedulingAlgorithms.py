@@ -114,7 +114,7 @@ def fcfs():
             if current_time < arrival:
                 current_time = arrival
 
-            if remaining_burst[task_id] > 0:
+            if remaining_burst[task_id] > 0
                 execution = min(remaining_burst[task_id], 1)
                 remaining_burst[task_id] -= execution
                 current_time += execution
@@ -131,3 +131,29 @@ def fcfs():
     print("\nPriority Scheduling Results:")
     print(f"Mean Waiting Time: {avg_waiting:.2f}")
     print(f"Mean Turnaround Time: {avg_turnaround:.2f}")
+
+    def menu():
+    while True:
+        print("\n================================")
+        print("  Task Scheduling Simulator  ")
+        print("================================")
+        print("1. FCFS Task Scheduling")
+        print("2. Priority-Based Task Scheduling")
+        print("3. Quit")
+        print("================================")
+
+        choice = input("Select an option (1/2/3): ")
+
+        if choice == '1':
+            fcfs()
+        elif choice == '2'
+            priority_scheduling()
+        elif choice == '3':
+            print("\nThanks for using the Task Scheduler. See you next time!")
+            break
+        else:
+            print("\nInvalid choice. Please select a valid option.")
+
+
+if __name__ == "__main__":
+    menu()
