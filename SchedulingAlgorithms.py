@@ -10,10 +10,24 @@ def save_results(filename, results):
         file.write(results)
     print(f"\nResults have been saved to {filename}.\n")
 
+def get_positive_integer(prompt):
+    """
+    Helper function to get a valid positive integer from the user.
+    """
+    while True:
+        try:
+            value = int(input(prompt))
+            if value > 0:
+                return value
+            else:
+                print("Please enter a positive integer.")
+        except ValueError:
+            print("Invalid input! Please enter a valid integer.")
+
 def fcfs():
     try:
-        print("\n=== TEST FCFS Simulation ===")
-        process_count = int(input("How many tasks to schedule? "))
+        print("\n=== Simple FCFS Simulation ===")
+        process_count = get_positive_integer("How many tasks to schedule? ")
         processes = []
         task_ids = set()
 
@@ -25,8 +39,8 @@ def fcfs():
                 else:
                     task_ids.add(task_id)
                     break
-            arrival = int(input("Enter Start Time: "))
-            burst = int(input("Enter Duration: "))
+            arrival = get_positive_integer("Enter Start Time: ")
+            burst = get_positive_integer("Enter Duration: ")
             processes.append([task_id, arrival, burst])
 
         processes.sort(key=lambda x: x[1])
@@ -61,7 +75,7 @@ def fcfs():
 def priority_scheduling():
     try:
         print("\n=== Dynamic Priority Scheduling Simulation ===")
-        process_count = int(input("Number of tasks to handle: "))
+        process_count = get_positive_integer("Number of tasks to handle: ")
         processes = []
         task_ids = set()
 
@@ -73,9 +87,9 @@ def priority_scheduling():
                 else:
                     task_ids.add(task_id)
                     break
-            arrival = int(input("Enter Start Time: "))
-            burst = int(input("Enter Duration: "))
-            priority = int(input("Enter Priority Level (Lower is better): "))
+            arrival = get_positive_integer("Enter Start Time: ")
+            burst = get_positive_integer("Enter Duration: ")
+            priority = get_positive_integer("Enter Priority Level (Lower is better): ")
             processes.append([task_id, arrival, burst, priority])
 
         processes.sort(key=lambda x: (x[1], x[3]))  
