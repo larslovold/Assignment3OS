@@ -2,8 +2,16 @@
 
 import heapq
 
+def save_results(filename, results):
+    """
+    Save results to a text file.
+    """
+    with open(filename, 'w') as file:
+        file.write(results)
+    print(f"\nResults have been saved to {filename}.\n")
+
 def fcfs():
-    print("\n=== Simple FCFS Simulation ===")
+    print("\n=== TEST FCFS Simulation ===")
     process_count = int(input("How many tasks to schedule? "))
     processes = []
 
