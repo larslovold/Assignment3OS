@@ -12,13 +12,13 @@ def get_positive_integer(prompt):
     """
     Helper function to get a valid positive integer from the user.
     """
-    while True
+    while True:
         try:
             value = int(input(prompt))
             if value > 0:
                 return value
             else:
-                print("Please enter a positive integer.")
+                print("please enter a positive integer.")
         except ValueError:
             print("Invalid input! Please enter a valid integer.")
 
