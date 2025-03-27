@@ -12,17 +12,8 @@ The program provides results including:
 
 ---
 
-## File Structure
-```
-- main.py (Main entry point of the program)
-- fcfs.py (Implementation of FCFS Scheduling)
-- priority_scheduling.py (Implementation of Priority Scheduling)
-- utils.py (Utility functions for input handling and saving results)
-```
 
----
-
-## eatures
+## Features
 - Enhanced Input Validation: Ensures only valid integers are accepted for numeric inputs.
 - Duplicate Task ID Prevention: Ensures Task IDs are unique to avoid conflicts.
 - Custom File Naming: Users can choose filenames for saving results.
@@ -35,11 +26,11 @@ The program provides results including:
 1. Make sure all files are in the **same folder**.
 2. Run the program by typing:
 ```bash
-python main.py
+python SchedulingAlgorithm.py
 ```
 or
 ```bash
-py main.py
+py SchedulingAlgorithm.py
 ```
 
 ---
