@@ -1,5 +1,3 @@
-# Process Scheduling Simulation: FCFS & Dynamic Priority Allocation
-
 import heapq
 
 def save_results(filename, results):
@@ -8,7 +6,7 @@ def save_results(filename, results):
     """
     with open(filename, 'w') as file:
         file.write(results)
-    print(f"\nResults have been saved to {filename}.\n")
+    print(f"\nResults have been saved to {filename}.")
 
 def get_positive_integer(prompt):
     """
@@ -23,6 +21,13 @@ def get_positive_integer(prompt):
                 print("Please enter a positive integer.")
         except ValueError:
             print("Invalid input! Please enter a valid integer.")
+
+def get_filename():
+    """
+    Prompt the user to enter a filename or use the default.
+    """
+    filename = input("Enter filename to save the results (Leave blank for default): ").strip()
+    return filename if filename else "Results.txt"
 
 def fcfs():
     try:
@@ -67,7 +72,8 @@ def fcfs():
         print(results)
 
         if input("Do you want to save the results to a file? (y/n): ").lower() == 'y':
-            save_results('FCFS_Results.txt', results)
+            filename = get_filename()
+            save_results(filename, results)
 
     except ValueError:
         print("\nInvalid input! Please enter numbers only where required.\n")
@@ -131,7 +137,8 @@ def priority_scheduling():
         print(results)
 
         if input("Do you want to save the results to a file? (y/n): ").lower() == 'y':
-            save_results('Priority_Results.txt', results)
+            filename = get_filename()
+            save_results(filename, results)
 
     except ValueError:
         print("\nInvalid input! Please enter numbers only where required.\n")
