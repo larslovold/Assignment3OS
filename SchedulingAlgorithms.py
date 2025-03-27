@@ -12,7 +12,7 @@ def get_positive_integer(prompt):
     """
     Helper function to get a valid positive integer from the user.
     """
-    while True:
+    while True
         try:
             value = int(input(prompt))
             if value > 0:
@@ -142,6 +142,7 @@ def priority_scheduling():
 
     except ValueError:
         print("\nInvalid input! Please enter numbers only where required.\n")
+
 
 def menu():
     while True:
