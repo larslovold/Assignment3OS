@@ -1,0 +1,7 @@
+Task ID	Waiting Time	Turnaround Time
+2	0	50
+1	41	56
+15	42	74
+
+Mean Waiting Time: 27.67
+Mean Turnaround Time: 60.00
